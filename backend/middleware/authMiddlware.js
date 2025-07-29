@@ -2,9 +2,13 @@ const jwt = require('jsonwebtoken');
 const userModel = require("../models/user.model");
 
 const authMiddleware = async (req, res, next) => {
-    const token = req.cookies.jwt;
+    const token = req.cookies?.jwt;
+
+    if (!token) {
+        return res.status(401).json({ message: 'Unauthorized: Token not found' });
+    }
     try {
-        const decode = await jwt.sign(token, process.env.JWT_SECRET);
+        const decoded = await jwt.verify(token, process.env.JWT_SECRET);
         if(!decoded || !decoded.userID){
             return res.status(401).json({message: "Unauthorized access, invalid token"});
         }
@@ -17,8 +21,8 @@ const authMiddleware = async (req, res, next) => {
         req.user = user;
         next();
     } catch (error) {
-        console.log("error in middleware.")
-      return res.status(401).json({ message: 'Invalid token' });  
+        console.log("error in middleware.", error);
+        return res.status(401).json({ message: 'Invalid token' });  
     }
 }
 

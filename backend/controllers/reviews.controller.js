@@ -3,7 +3,7 @@ const reviewModel = require('../models/reviews.model');
 
 const addReview = async (req, res) => {
     const userId = req.user._id;
-    const {bookId} = req.params.bookId;
+    const {bookId} = req.params;
     const {review_text, rating} = req.body;
     try {
 
@@ -30,12 +30,12 @@ const addReview = async (req, res) => {
     }
 }
 const getReviewsByBook = async (req, res) => {
-    const { bookId } = req.params.bookId;
+    const { bookId } = req.params;
     try {
         const reviews = await reviewModel.find({book : bookId}).populate('reviewer', 'name').sort({ createdAt: -1 });
 
         const averageRating = await reviewModel.aggregate([
-            { $match : { book : new mongoose.Types.ObjectId(bookId)}},
+            { $match : { book : bookId}},
             { $group : { _id : null, avgRating : {$avg : "$rating"}}},
         ]);
 

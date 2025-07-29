@@ -2,9 +2,9 @@ const bookModel = require('../models/book.model');
 
 const addBook = async (req, res) => {
     const userId = req.user._id;
-    const {title, author, genre} = req.body;
+    const {title, author, genre, description} = req.body;
     try {
-        if( !title || !author || !genre ) {
+        if( !title || !author || !genre || !description ) {
             return res.status(400).json({message: "All fields are required"});
         }
 
@@ -16,6 +16,7 @@ const addBook = async (req, res) => {
             title,
             author,
             genre,
+            description,
             createdBy: userId,
         })
 
@@ -27,17 +28,17 @@ const addBook = async (req, res) => {
 }
 
 const getBooks = async (req, res) => {
-    const {genre, author, page=1, limit=10} = req.body;
-    const filter = {}
+    const {genre, author, page=1, limit=10} = req.query;
+    const query = {}
 
-    if(genre) filter.genre = genre;
-    if(author) filter.author = author;
+    if(genre) query.genre = genre;
+    if(author) query.author = author;
 
     try {
 
-        const findBooks = await bookModel.find(filter).skip((page-1)* limit).limit(parseInt(limit));
+        const findBooks = await bookModel.find(query).skip((page-1)* limit).limit(parseInt(limit));
 
-        const total = await bookModel.countDocuments(filter);
+        const total = await bookModel.countDocuments(query);
 
         return res.status(200).json({ success : true, findBooks, total, currentPage : parseInt(page), totalPages: Math.ceil(total/limit)})
         

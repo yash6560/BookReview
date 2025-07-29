@@ -4,7 +4,7 @@ const { addReview, getReviewsByBook } = require('../controllers/reviews.controll
 
 const router = express.Router();
 
-router.post('book/:bookId', authMiddleware, addReview);
-router.get('book/:bookId', getReviewsByBook);
+router.post('/book/:bookId', authMiddleware, addReview);
+router.get('/book/:bookId', getReviewsByBook);
 
 module.exports = router;

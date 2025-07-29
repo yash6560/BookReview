@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const reviewsSchema = new mongoose.Schema({
     book :{
         type: mongoose.Schema.Types.ObjectId,
-        ref : 'Book',
+        ref : 'Books',
         require : true,
     },
     reviewer: {

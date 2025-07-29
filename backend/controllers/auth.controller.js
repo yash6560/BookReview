@@ -4,7 +4,6 @@ const bcrypt = require('bcryptjs');
 
 const signUp = async (req, res) => {
     const {name, email, password} = req.body;
-
     try {
         if(!name || !email || !password) {
             return res.status(400).json({message: "All fields are required"});
@@ -25,10 +24,12 @@ const signUp = async (req, res) => {
             return res.status(400).json({message: "User already exists"});
         }
 
+        const hasePassword = await bcrypt.hash(password, 10);
+
         const newUser = await userModel.create({
             name,
             email,
-            password,
+            password : hasePassword,
         });
 
         return res.status(201).json({success: true, message: "User created successfully"});
@@ -76,9 +77,18 @@ const logIn = async (req, res) => {
     }
 }
 
-const logOut = (req, res) => {
+const logOut = async (req, res) => {
     res.clearCookie("jwt");
     return res.status(200).json({success: true, message: "User logged out successfully"});
 }
 
-module.exports = {signUp, logIn, logOut}
+const authMe = async (req, res) => {
+    try {
+        return res.status(200).json({success: true, user : req.user})
+    } catch (error) {
+        console.log("autentication error : ", error);
+        return res.status(500).json({message: "error in authentication"});
+    }
+}
+
+module.exports = {signUp, logIn, logOut, authMe}
