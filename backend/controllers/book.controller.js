@@ -2,6 +2,7 @@ const bookModel = require('../models/book.model');
 
 const addBook = async (req, res) => {
     const userId = req.user._id;
+    const file = req.file?.path
     const {title, author, genre, description} = req.body;
     try {
         if( !title || !author || !genre || !description ) {
@@ -13,6 +14,7 @@ const addBook = async (req, res) => {
         }
 
         const addbook = await bookModel.create({
+            bookImg: file,
             title,
             author,
             genre,
@@ -36,7 +38,7 @@ const getBooks = async (req, res) => {
 
     try {
 
-        const findBooks = await bookModel.find(query).skip((page-1)* limit).limit(parseInt(limit));
+        const findBooks = await bookModel.find(query).skip((page-1)* limit).limit(parseInt(limit)).sort({ createdAt: -1 });
 
         const total = await bookModel.countDocuments(query);
 

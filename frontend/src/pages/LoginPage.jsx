@@ -4,7 +4,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import useAuthStore from '../store/useAuthStore';
 import toast from 'react-hot-toast';
 
-const LoginPage = () => {const [formData,setFormData] = useState({
+const LoginPage = () => {
+  const [formData,setFormData] = useState({
     email : '',
     password : '',
   })

@@ -35,7 +35,7 @@ const getReviewsByBook = async (req, res) => {
         const reviews = await reviewModel.find({book : bookId}).populate('reviewer', 'name').sort({ createdAt: -1 });
 
         const averageRating = await reviewModel.aggregate([
-            { $match : { book : bookId}},
+            { $match : { book : new mongoose.Types.ObjectId(bookId)}},
             { $group : { _id : null, avgRating : {$avg : "$rating"}}},
         ]);
 

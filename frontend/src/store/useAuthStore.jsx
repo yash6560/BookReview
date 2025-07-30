@@ -11,7 +11,6 @@ const useAuthStore = create((set) => ({
         try {
             const res = await axiosInstance.post('/auth/me');
             set({ user: res.data.user, isAuthenticated: true });
-            console.log(res); 
             return res.data;
         } catch (error) {
             console.error('Auth check failed:', error);

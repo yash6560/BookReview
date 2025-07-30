@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 
 const bookSchema = new mongoose.Schema({
+    bookImg: {
+        type: String,
+    },
     title: {
         type: String,
         required: true,

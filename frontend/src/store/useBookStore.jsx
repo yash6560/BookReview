@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import axiosInstance from '../utils/axios';
+import {uploadInstance} from '../utils/axios';
 
 export const useBookStore = create((set) => ({
     bookList : [],
@@ -29,9 +30,11 @@ export const useBookStore = create((set) => ({
         }
     },
 
-    addBook : async () => {
+    addBook : async (formData) => {
         try {
-            
+            const res = await uploadInstance.post('/books/', formData)
+            console.log(res.data);
+            return res.data;
         } catch (error) {
             console.error('add book failed:', error);
         }

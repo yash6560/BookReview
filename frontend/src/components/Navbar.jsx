@@ -30,7 +30,7 @@ const Navbar = () => {
           {/* Navigation Links */}
           <div className="hidden md:flex space-x-6">
             <Link to="/" className="text-white/50 hover:text-green-400 hover:underline font-medium transition">Home</Link>
-            <Link to="/books" className="text-white/50 hover:text-green-400 hover:underline font-medium transition">Books</Link>
+            <Link to="/book" className="text-white/50 hover:text-green-400 hover:underline font-medium transition">Books</Link>
             <Link to="/about" className="text-white/50 hover:text-green-400 hover:underline font-medium transition">About</Link>
             <Link to="/contact" className="text-white/50 hover:text-green-400 hover:underline font-medium transition">Contact</Link>
           </div>
@@ -59,7 +59,7 @@ const Navbar = () => {
         {hamburger && (
           <div className="absolute bg-gray-800 right-0 top-12 w-[260px] rounded-b-lg md:hidden flex flex-col space-y-2 mt-4 p-4 border-t border-white/10">
             <Link to="/" className="text-white/70 hover:text-green-400 px-2">Home</Link>
-            <Link to="/books" className="text-white/70 hover:text-green-400 px-2">Books</Link>
+            <Link to="/book" className="text-white/70 hover:text-green-400 px-2">Books</Link>
             <Link to="/about" className="text-white/70 hover:text-green-400 px-2">About</Link>
             <Link to="/contact" className="text-white/70 hover:text-green-400 px-2">Contact</Link>
             
