@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { useReviewStore } from '../store/useReviewStore';
 import { toast } from 'react-hot-toast';
+import useAuthStore from '../store/useAuthStore';
+import { useNavigate } from 'react-router-dom';
 
 const AddReview = ({bookId, closeModal, getBook}) => {
     const [data, setData] = useState({
@@ -9,9 +11,15 @@ const AddReview = ({bookId, closeModal, getBook}) => {
     });
     
     const { addReviews } = useReviewStore();
+    const {user} = useAuthStore();
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if(!user) {
+            toast.error("You need to be logged in to add a review.");
+            navigate('/login');
+        }
         const res = await addReviews(bookId, data);
         if(res?.success) {
             toast.success(res?.message || 'Review added successfully');
