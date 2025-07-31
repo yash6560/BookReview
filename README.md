@@ -62,4 +62,4 @@ BookReview is a Node.js and Express-based web application for managing and shari
 
 ## License
 
-This project is licensed under the MIT License.
+Public
